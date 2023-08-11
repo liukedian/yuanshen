@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: msg
+  labels:
+    app: msg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: msg
+  template:
+    metadata:
+      name: msg
+      labels:
+        app: msg
+    spec:
+      containers:
+        - name: msg
+          image: harbor.edu.cn/nju09/msg:VERSION
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: msg
+spec:
+  selector:
+    app: msg
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: NodePort
+      
